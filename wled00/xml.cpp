@@ -325,7 +325,7 @@ void getSettingsJS(byte subPage, char* dest)
     if (!mods.isNull()) fillUMPins(mods);
 
     #ifdef WLED_ENABLE_DMX
-      oappend(SET_F(",2")); // DMX hardcoded pin
+      oappend(SET_F(",1")); // DMX hardcoded pin
     #endif
 
     //Note: Using pin 3 (RX) disables Adalight / Serial JSON

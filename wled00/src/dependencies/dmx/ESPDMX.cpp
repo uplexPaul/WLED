@@ -26,7 +26,7 @@
 #define BREAKFORMAT    SERIAL_8N1
 
 bool dmxStarted = false;
-int sendPin = 2;		//dafault on ESP8266
+int sendPin = 1;		//dafault on ESP8266
 
 //DMX value array and size. Entry 0 will hold startbyte
 uint8_t dmxData[dmxMaxChannel] = {};
@@ -36,7 +36,7 @@ int chanSize;
 void DMXESPSerial::init() {
   chanSize = defaultMax;
 
-  Serial1.begin(DMXSPEED);
+  Serial.begin(DMXSPEED);
   pinMode(sendPin, OUTPUT);
   dmxStarted = true;
 }
@@ -50,7 +50,7 @@ void DMXESPSerial::init(int chanQuant) {
 
   chanSize = chanQuant;
 
-  Serial1.begin(DMXSPEED);
+  Serial.begin(DMXSPEED);
   pinMode(sendPin, OUTPUT);
   dmxStarted = true;
 }
@@ -78,7 +78,7 @@ void DMXESPSerial::write(int Channel, uint8_t value) {
 
 void DMXESPSerial::end() {
   chanSize = 0;
-  Serial1.end();
+  Serial.end();
   dmxStarted = false;
 }
 
@@ -87,19 +87,19 @@ void DMXESPSerial::update() {
 
   //Send break
   digitalWrite(sendPin, HIGH);
-  Serial1.begin(BREAKSPEED, BREAKFORMAT);
-  Serial1.write(0);
-  Serial1.flush();
+  Serial.begin(BREAKSPEED, BREAKFORMAT);
+  Serial.write(0);
+  Serial.flush();
   delay(1);
-  Serial1.end();
+  Serial.end();
 
   //send data
-  Serial1.begin(DMXSPEED, DMXFORMAT);
+  Serial.begin(DMXSPEED, DMXFORMAT);
   digitalWrite(sendPin, LOW);
-  Serial1.write(dmxData, chanSize);
-  Serial1.flush();
+  Serial.write(dmxData, chanSize);
+  Serial.flush();
   delay(1);
-  Serial1.end();
+  Serial.end();
 }
 
 // Function to update the DMX bus
