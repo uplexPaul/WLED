@@ -15,8 +15,6 @@
 
 #include "ESPDMX.h"
 
-
-
 #define dmxMaxChannel  512
 #define defaultMax 250
 
